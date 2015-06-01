@@ -1,0 +1,68 @@
+package test;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+ 
+public class CusTest {
+ 
+	public static void main(String[] args) throws IOException {
+ 
+		CusTest obj = new CusTest();
+		String key1="";
+		
+		
+		
+		String machinename = "krohit@prod-eaeops-deploy.bos01.corp.akamai.com";
+		String folder1 = " /app01";
+		String folder2 = " Manifest_Deployment_customsettings";
+		String configfile = " MyLab.config";
+		String takeaccesspath = " /app01/Manifest_Deployment_customsettings/";
+		String copyfile = " gsmdevqa.config MyLab.config";
+ 
+		//in mac oxs
+		String command = "ssh -2 -A" + machinename;
+		String command2 = "cd" + folder1;
+		String command3 = "cd" +folder2;
+		String command4 = "sudo chmod -R 777";
+		String command5 = "cp" + copyfile;
+		//in windows
+		//String command = "ping -n 3 " + domainName;
+ 
+		String output = obj.executeCommand(command4);
+		
+		Runtime.getRuntime().exec(command);
+		Runtime.getRuntime().exec(command2);
+		Runtime.getRuntime().exec(command3);
+		Runtime.getRuntime().exec(command4);
+		Runtime.getRuntime().exec(command5);
+ 
+		System.out.println(output);
+ 
+	}
+ 
+	private String executeCommand(String command4) {
+ 
+		StringBuffer output = new StringBuffer();
+ 
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(command4);
+			p.waitFor();
+			BufferedReader reader = 
+                            new BufferedReader(new InputStreamReader(p.getInputStream()));
+ 
+                        String line = "";			
+			while ((line = reader.readLine())!= null) {
+				output.append(line + "\n");
+			}
+ 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+ 
+		return output.toString();
+ 
+	}
+ 
+}
